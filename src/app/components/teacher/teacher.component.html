@@ -1,0 +1,53 @@
+
+  <div class="row">
+  <div  [class] ="colForm">
+  <div class="container-form">
+    <button (click) = onClick()>Add new</button>
+    <form id="form-add">
+      <span>Tên</span>
+      <input type="text" name="txtName">
+      <span>Phone</span>
+      <input type="text" name="txtPhone">
+      <span>Ngày sinh</span>
+      <input type="date" name="date">
+      <button>Search</button>
+    </form>
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>#</th>
+        <th>Tên</th>
+        <th>Khoa</th>
+        <th>Phone</th>
+        <th>Mail</th>
+        <th>Ngày Sinh</th>
+      </tr>
+    </thead>
+    <tbody>
+      <ng-container *ngFor="let f of fatcutly, let i = index">
+        <tr *ngFor="let data of getTeacher(f.id), let j = index, first as isFirst">
+          <td>{{(j + 1)}}</td>
+          <td (click)="onClick()">{{data.name}}</td>
+          <ng-container *ngIf="isFirst">
+            <td [rowSpan]="getTeacher(data.khoa).length">{{f.name}}</td>
+          </ng-container>
+
+          <td>{{data.phone}}</td>
+          <td>{{data.mail}}</td>
+          <td>{{data.birthday}}</td>
+        </tr>
+      </ng-container>
+
+    </tbody>
+  </table>
+</div>
+<div *ngIf="" [class] = "colPopup">
+  <h1>ssssssssss</h1>
+</div>
+</div>
+
+
+
+

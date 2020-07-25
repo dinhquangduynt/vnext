@@ -1,0 +1,39 @@
+
+table {
+  font-family: arial, sans-serif;
+  border-collapse: collapse;
+  width: 100%;
+}
+
+td, th {
+  border: 1px solid #dddddd;
+  text-align: left;
+  padding: 8px;
+}
+
+tr:nth-child(even) {
+  background-color: #dddddd;
+}
+
+.container {
+  background-color: #E7F0F7 !important;
+  width: 100% !important;
+}
+
+.container-form button :hover {
+  background: gray;
+}
+
+#form-add {
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+#form-add span {
+  margin: 10px 20px 10px 20px;
+  font-family: 'Courier New', Courier, monospace;
+}
+
+#form-add button {
+  margin: 10px 20px 10px 20px;
+}
