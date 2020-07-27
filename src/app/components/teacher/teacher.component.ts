@@ -9,26 +9,49 @@ import { Component, OnInit } from '@angular/core';
 export class TeacherComponent implements OnInit {
 
   public teachers: any[];
-  public fatcutly: any[];
+  public fatcutlys: any[];
   isShowPopup : false;
+  teacher : any;
+  id = "";
+  isAdd = false;
+  isEdit = false;
 
-  colForm = "col-12";
+  colForm = "col-md-12";
   colPopup = "";
+
   constructor(private data : DataService) {
     this.teachers = this.data.teacherData.sort((t1,t2) => (t1.khoa - t2.khoa));
-    this.fatcutly = this.data.facultyData;
+    this.fatcutlys = this.data.facultyData;
    }
 
   ngOnInit(): void {
   }
-
-  onClick(){
-    this.colForm = "col-6";
-    this.colPopup = "col-6";
-  }
-
   getTeacher(fatcutly: number){
     return this.teachers.filter(t => t.khoa === fatcutly);
+  }
+
+  onSubmit(){
+
+  }
+
+  onClickEdit(id:number){
+    this.teacher = this.teachers.find(t => t.id === id);
+    this.isEdit = true;
+    this.isAdd = false;
+    this.colForm = "col-md-6";
+    this.colPopup = "col-md-6";
+  }
+
+  onClickAdd(){
+    this.colForm = "col-md-6";
+    this.colPopup = "col-md-6";
+    this.isAdd = true;
+    this.isEdit = false;
+  }
+  onClosed(){
+    this.colForm = "col-12";
+    this.isAdd = false;
+    this.isEdit = false;
   }
 
 }

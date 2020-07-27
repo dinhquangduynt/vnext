@@ -1,5 +1,134 @@
-<div class="row">
-  <div class="col-3">col-3</div>
-  <div class="col-6">col-6</div>
-  <div class="col-3">col-3</div>
+<div class="content">
+    <div class="row">
+        <div [class]="colForm">
+            <div class="container-form">
+                <button (click)="onClickAdd()">Add new</button>
+            </div>
+            <table class="table-show">
+                <thead>
+                    <tr>
+                        <th>Tên</th>
+                        <th>Khoa</th>
+                        <th>Lớp</th>
+                        <th>Ngày Sinh</th>
+                    </tr>
+                </thead>
+
+                <tbody>
+                    <ng-container class="dropdown" *ngFor="let fat of fatcutlys">
+                        <tr class="dropbtn">
+                            <td style="color: black;" colspan="4" (click)="showClass(fat.id)">{{fat.name}}</td>
+                        </tr>
+                        <ng-container *ngIf="fat.id === fatcutlyID && isShowClass">
+                            <ng-container *ngFor="let class of getListClasses(fat.id)">
+                                <tr>
+                                    <td colspan="4" (click)="showStudent(class.id)">{{class.name}}</td>
+                                </tr>
+                                <ng-container *ngIf="classID === class.id  && isShowStudent">
+                                    <ng-container>
+                                        <tr *ngFor="let student of getStudents(class.id)">
+                                            <td (click)="onClickEdit(student.id)"> {{student.name}} </td>
+                                            <td> {{fat.name}} </td>
+                                            <td> {{class.name}} </td>
+                                            <td> {{student.birthday}} </td>
+                                        </tr>
+                                    </ng-container>
+                                </ng-container>
+                            </ng-container>
+                        </ng-container>
+                    </ng-container>
+                </tbody>
+            </table>
+        </div>
+
+        <div class="showPopup" [class]="colPopup" *ngIf="isAdd">
+            <button class="btn" (click)="onClosed()">X</button>
+            <form class="table-popup">
+                <table>
+                    <tr>
+                        <td><label>Tên: </label></td>
+                        <td><input type="text" name="txtName"></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Lớp: </label></td>
+                        <td>
+                            <select>
+                            <option selected>
+                            </option>
+                            <option *ngFor="let item of classes">
+                              {{item.name}}
+                            </option>
+                          </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Ngày Sinh: </label></td>
+                        <td><input type="date" name="txtNgaySinh"></td>
+                    </tr>
+
+                    <tr>
+                        <td> <label>Khoa:</label> </td>
+                        <td>
+                            <select>
+                              <option selected>
+                              </option>
+                              <option *ngFor="let item of fatcutlys">
+                                {{item.name}}
+                              </option>
+                            </select>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <button class="btn" (click)="onSubmit()">Save</button>
+
+        </div>
+        <div class="showPopup" [class]="colPopup" *ngIf="isEdit">
+            <button class="btn" (click)="onClosed()">X</button>
+            <form class="table-popup">
+                <table>
+                    <tr>
+                        <td><label>Tên: </label></td>
+                        <td><input type="text" name="txtName" value={{student.name}}></td>
+                    </tr>
+
+                    <tr>
+                        <td><label>khoa: </label></td>
+                        <td>
+                            <select>
+                            <option selected >{{getNameFatcutly(student.khoa).name}}</option>
+                            <ng-container *ngFor="let f of fatcutlys">
+                              <option *ngIf="f.name != getNameFatcutly(student.khoa).name">
+                                {{f.name}}
+                              </option>
+                            </ng-container>
+                          </select>
+                        </td>
+                    </tr>
+
+                    <tr>
+                        <td><label>Ngày Sinh: </label></td>
+                        <td><input type="date" name="txtBirthday" value={{student.birthday}}></td>
+                    </tr>
+
+                    <tr>
+                        <td> <label>lop:</label> </td>
+                        <td>
+                            <select>
+                            <option selected >{{getNameClass(student.lop).name}}</option>
+                            <ng-container *ngFor="let f of getListClasses(student.khoa)">
+                              <option *ngIf="f.name != getNameClass(student.lop).name">
+                                {{f.name}}
+                              </option>
+                            </ng-container>
+                          </select>
+                        </td>
+                    </tr>
+                </table>
+            </form>
+            <button class="btn" (click)="onSubmit()">Save</button>
+        </div>
+    </div>
 </div>

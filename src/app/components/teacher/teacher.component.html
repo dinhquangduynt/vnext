@@ -1,53 +1,124 @@
-
+<div class="content">
   <div class="row">
-  <div  [class] ="colForm">
-  <div class="container-form">
-    <button (click) = onClick()>Add new</button>
-    <form id="form-add">
-      <span>Tên</span>
-      <input type="text" name="txtName">
-      <span>Phone</span>
-      <input type="text" name="txtPhone">
-      <span>Ngày sinh</span>
-      <input type="date" name="date">
-      <button>Search</button>
-    </form>
-  </div>
+    <div [class]="colForm">
+      <div class="container-form">
+        <button (click)=onClickAdd()>Add new</button>
+        <form id="form-add">
+          <label>Tên</label>
+          <input type="text" name="txtName">
+          <label>Phone</label>
+          <input type="text" name="txtPhone">
+          <label>Ngày sinh</label>
+          <input type="date" name="date">
+          <button>Search</button>
+        </form>
+      </div>
 
-  <table>
-    <thead>
-      <tr>
-        <th>#</th>
-        <th>Tên</th>
-        <th>Khoa</th>
-        <th>Phone</th>
-        <th>Mail</th>
-        <th>Ngày Sinh</th>
-      </tr>
-    </thead>
-    <tbody>
-      <ng-container *ngFor="let f of fatcutly, let i = index">
-        <tr *ngFor="let data of getTeacher(f.id), let j = index, first as isFirst">
-          <td>{{(j + 1)}}</td>
-          <td (click)="onClick()">{{data.name}}</td>
-          <ng-container *ngIf="isFirst">
-            <td [rowSpan]="getTeacher(data.khoa).length">{{f.name}}</td>
+      <table class="table-show">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Tên</th>
+            <th>Khoa</th>
+            <th>Phone</th>
+            <th>Mail</th>
+            <th>Ngày Sinh</th>
+          </tr>
+        </thead>
+        <tbody>
+          <ng-container *ngFor="let f of fatcutlys, let i = index">
+            <tr *ngFor="let data of getTeacher(f.id), let j = index, let c = count first as isFirst">
+              <td>{{( i*c + (j + 1))}}</td>
+              <td (click)="onClickEdit(data.id)">{{data.name}}</td>
+              <ng-container *ngIf="isFirst">
+                <td [rowSpan]="getTeacher(data.khoa).length">{{f.name}}</td>
+              </ng-container>
+              <td>{{data.phone}}</td>
+              <td>{{data.mail}}</td>
+              <td>{{data.birthday}}</td>
+            </tr>
           </ng-container>
 
-          <td>{{data.phone}}</td>
-          <td>{{data.mail}}</td>
-          <td>{{data.birthday}}</td>
-        </tr>
-      </ng-container>
+        </tbody>
+      </table>
+    </div>
 
-    </tbody>
-  </table>
+    <div class ="showPopup" [class]="colPopup" *ngIf="isAdd">
+      <button class="btn" (click)="onClosed()">X</button>
+      <form class="table-popup">
+        <table >
+          <tr>
+            <td><label>Tên: </label></td>
+            <td><input type="text" name="txtName"></td>
+          </tr>
+
+          <tr>
+            <td><label>Phone: </label></td>
+            <td><input type="text" name="txtPhone"></td>
+          </tr>
+
+          <tr>
+            <td><label>Ngày Sinh: </label></td>
+            <td><input type="date" name="txtNgaySinh"></td>
+          </tr>
+
+          <tr>
+            <td> <label>Khoa:</label> </td>
+            <td>
+              <select>
+                <option selected>
+
+                </option>
+                <option *ngFor="let item of fatcutlys">
+                  {{item.name}}
+                </option>
+              </select>
+            </td>
+          </tr>
+        </table>
+      </form>
+      <button class="btn" (click)="onSubmit()">Save</button>
+
+    </div>
+
+    <div class ="showPopup" [class]="colPopup" *ngIf="isEdit">
+      <button class="btn" (click)="onClosed()">X</button>
+      <form  class="table-popup">
+        <table>
+          <tr>
+            <td><label>Tên: </label></td>
+            <td><input type="text" name="txtName" value={{teacher.name}}></td>
+          </tr>
+
+          <tr>
+            <td><label>Phone: </label></td>
+            <td><input type="text" name="txtPhone" value={{teacher.phone}}></td>
+          </tr>
+
+          <tr>
+            <td><label>Ngày Sinh: </label></td>
+            <td><input type="date" name="txtNgaySinh" value={{teacher.birthday}}></td>
+          </tr>
+
+          <tr>
+            <td> <label>Khoa:</label> </td>
+            <td>
+              <select>
+                <option selected>
+                  {{fatcutlys[teacher.khoa-1].name}}
+                </option>
+                <ng-container *ngFor="let item of fatcutlys">
+                  <option *ngIf="item.name != fatcutlys[teacher.khoa-1].name">
+                    {{item.name}}
+                  </option>
+                </ng-container>
+
+              </select>
+            </td>
+          </tr>
+        </table>
+      </form>
+      <button class="btn" (click)="onSubmit()">Save</button>
+    </div>
+  </div>
 </div>
-<div *ngIf="" [class] = "colPopup">
-  <h1>ssssssssss</h1>
-</div>
-</div>
-
-
-
-
